@@ -3,7 +3,7 @@
 ## Overview
 Brain imaging such as fMRI and genomic sequencing have become critical tools enabling characterization of brain disorders. Researchers may conduct genome-wide association studies (GWAS) to identify genetic basis; alternatively, one can use brain images to study functional alternations. Multi-scale data of genotype, brain image, and disease phenotype assessed on a single cohort are available from larger consortium efforts, however these studies are still limited. Imaging large cohorts is expensive, and imaging is unavailable for many legacy datasets. To address this problem, we developed Image-Mediated Association Study (IMAS), which first uses a dataset containing images and genotype (e.g., UK Biobank) to select image-relevant genetic variants, and then, using a dataset with genotype and phenotype (e.g., GWAS), aggregates selected genetic variants for association mapping via multiple linear regression or a kernel method. By conducting simulations and analyzing the UK Biobank image-derived phenotypes (IDPs) together with GWAS data of four neuropsychiatry disorders, we highlight two advantages of IMAS: 1) it improves the power of both genotype-phenotype and the IDP-phenotype association analyses than either alone, 2) a striking advantage of IMAS is that, assuming the IDP-phenotype association rooted in genetics, IMAS that does not require IDPs and phenotype in the same dataset could be more powerful than applying a naïve method to the GWAS only dataset.  This shows that, by utilizing brain images (e.g., from UK Biobank), one can reanalyze legacy GWAS datasets from the perspective of brain images, enabling new research and bringing cost-savings for integrated analysis of genetics, imaging, and brain disorders.
 
-![My Image](Fig1.PNG)
+<img src="Figure1.PNG" alt="drawing" width="400"/>
 
 ## The IMAS model framework:
 ### Step 1: Preprocessing of UK Biobank IDP phenotypes
@@ -28,18 +28,13 @@ IMAS is a batteries-included JAR executable. All needed external jar packages ar
 As we used an R package SKAT, the users have to install R and SKAT (https://cran.r-project.org/web/packages/SKAT/index.html.) The versions of R and R package SKAT that we have used on our platform are: version 2.0.0 for SKAT and version 3.5.1 for R. Other versions are not tested, although they may work. Users are also expected to have java (version: 1.8) on their platform. plink (v1.07, https://zzz.bwh.harvard.edu/plink/download.shtml) should also be installed.
 
 Usage:
-
 `java -jar IMAS.jar IMAS -format csv|plink -input_genotype INPUT_GENOTYPE_FILE -input_phenotype INPUT_PHENOTYPE_FILE -input_phenotype_column INPUT_PHENOTYPE_COLUMN_START:2 -input_phenotype_type PHENOTYPE_TYPE: continuous|binary 
--en_info_path INPUT_ELASTICNET_INFORMATION_FILE  -gene INPUT_ENSEMBL_GENE_ID  -plink PLINK_BINARY_FILE_PATH  -Rscript RSCRIPT_BINARY_FILE_PATH -output_folder OUTPUT_FOLDER_PATH`
+-snp_info_path INPUT_WEIGHT_INFORMATION_FILE  -pheno_id INPUT_IDP_ID  -plink PLINK_BINARY_FILE_PATH  -Rscript RSCRIPT_BINARY_FILE_PATH -cmd_folder FOLDER_PATH_TO_IMAS_Association.R -output_folder OUTPUT_FOLDER_PATH`
 
 Installation and a simple example are described below. Users can get the final p-value result under the folder: OUTPUT_FOLDER_PATH. 
 You may try our example after "git clone". If trying csv format, the command line is:
 
-`java -jar kTWAS.jar kTWAS -format csv -input_genotype EXAMPLE/CSV_FORMAT/example.csv -input_phenotype EXAMPLE/CSV_FORMAT/example.tsv -input_phenotype_column 2 -input_phenotype_type binary -en_info_path ElasticNet_DB/ElasticNet_Whole_Blood.txt -gene ENSG00000250334.5 -plink /PATH/TO/plink -Rscript /PATH/TO/Rscript -output_folder /PATH/TO/OUT_FOLDER`
-
-Otherwise, if users want to try plink format, the command line is:
-
-`java -jar kTWAS.jar kTWAS -format plink -input_genotype EXAMPLE/PLINK_FORMAT/example.tped -input_phenotype EXAMPLE/PLINK_FORMAT/example.tfam -input_phenotype_column 6 -input_phenotype_type binary -en_info_path ElasticNet_DB/ElasticNet_Whole_Blood.txt -gene ENSG00000250334.5 -plink /PATH/TO/plink -Rscript /PATH/TO/Rscript -output_folder /PATH/TO/OUT_FOLDER`
+`java -jar CODES/IMAS.jar IMAS -format csv -input_genotype EXAMPLE/CSV_FORMAT/example.csv -input_phenotype EXAMPLE/CSV_FORMAT/example.tsv -input_phenotype_column 2 -input_phenotype_type binary -snp_info_path EMMAX_WEIGHT/IWAS_IBS_Scale_p0.01_new.txt -pheno_id 25498-2.0 -plink /PATH/TO/plink -Rscript /PATH/TO/Rscript -cmd_folder CODES/IMAS_Association.R -output_folder /PATH/TO/OUT_FOLDER`
 
 ### Contacts
 Jingni He, jingni.he1@ucalgary.ca<br>
